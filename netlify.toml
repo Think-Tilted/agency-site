@@ -9,3 +9,17 @@
   # Astro v6 requires Node >= 22.12.0 (see ADR-006). Pin the major so Netlify
   # builds match local. Bump deliberately, not implicitly.
   NODE_VERSION = "24"
+
+# Note: no [[redirects]] needed. Astro emits dist/404.html, which Netlify serves
+# automatically for unmatched paths — a catch-all redirect would be redundant.
+
+# Baseline security headers applied to every response. Sensible, framework-
+# agnostic defaults; tighten (e.g. add a Content-Security-Policy) per project.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=()"
+
