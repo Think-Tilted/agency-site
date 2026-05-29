@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { buildTitle } from "../utils/seo";
+---
+
+<BaseLayout
+  title={buildTitle("Contact")}
+  description="Get in touch to start a project with the studio."
+>
+  <section class="py-8 sm:py-12">
+    <h1 class="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+      Contact
+    </h1>
+    <p class="mt-4 max-w-[60ch] text-lg text-ink-soft">
+      Tell us about your project. (This form is a placeholder — it will be wired
+      up in a later pre-req.)
+    </p>
+
+    <form class="mt-8 grid max-w-lg gap-5">
+      <label class="grid gap-1.5 text-sm font-medium text-ink">
+        Name
+        <input type="text" name="name" autocomplete="name" class="field" />
+
+      </label>
+      <label class="grid gap-1.5 text-sm font-medium text-ink">
+        Email
+        <input type="email" name="email" autocomplete="email" class="field" />
+
+      </label>
+      <label class="grid gap-1.5 text-sm font-medium text-ink">
+        Message
+        <textarea name="message" rows="5" class="field"></textarea>
+
+      </label>
+      <button type="submit" class="btn-primary justify-self-start">Send</button>
+
+    </form>
+  </section>
+</BaseLayout>

@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { buildTitle } from "../utils/seo";
+---
+
+<BaseLayout title={buildTitle("Custom Websites, Built Predictably")}>
+  <section class="py-12 sm:py-16 lg:py-24">
+    <p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-clay">
+      Web Design &amp; Development Studio
+    </p>
+    <h1
+      class="max-w-[18ch] font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-6xl"
+    >
+      Custom websites that feel bespoke and ship predictably.
+    </h1>
+    <p class="mt-6 max-w-[52ch] text-lg text-ink-soft">
+      We turn ambitious visual designs into fast, maintainable production
+      websites — using a repeatable process from discovery to launch.
+    </p>
+    <a href="/contact" class="btn-primary mt-8">Start a project</a>
+
+  </section>
+</BaseLayout>

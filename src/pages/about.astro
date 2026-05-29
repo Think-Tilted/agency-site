@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { buildTitle } from "../utils/seo";
+---
+
+<BaseLayout
+  title={buildTitle("About")}
+  description="A studio focused on a repeatable, predictable process for custom websites."
+>
+  <section class="py-8 sm:py-12">
+    <h1 class="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+      About
+    </h1>
+    <div class="mt-6 max-w-[60ch] space-y-4 text-lg text-ink-soft">
+      <p>
+        We are a small studio focused on one thing: taking custom visual designs
+        and turning them into production-ready websites without chaos.
+      </p>
+      <p>
+        Every project is visually unique, but the process behind it is the same —
+        discovery, design, handoff, development, QA, launch, and support.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

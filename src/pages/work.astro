@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { buildTitle } from "../utils/seo";
+import { projects } from "../data/projects";
+---
+
+<BaseLayout title={buildTitle("Work")} description="Selected projects from the studio.">
+  <section class="py-8 sm:py-12">
+    <h1 class="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl">
+      Work
+    </h1>
+    <p class="mt-4 max-w-[60ch] text-lg text-ink-soft">
+      A selection of projects. More to come as the studio grows.
+    </p>
+
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+      {
+        projects.map((project) => (
+          <li>
+            <a
+              href={`/work/${project.slug}`}
+              class="group flex h-full flex-col gap-1 rounded-xl border border-paper-dim bg-paper-dim/30 p-5 transition-colors hover:border-clay"
+
+            >
+              <span class="font-display text-xl font-semibold text-ink group-hover:text-clay">
+                {project.name}
+              </span>
+              <span class="text-sm text-ink-soft">
+                {project.type} &middot; {project.year}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

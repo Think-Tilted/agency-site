@@ -1,0 +1,11 @@
+# Netlify build configuration (version-controlled so deploys are reproducible).
+# See PRE-004 and ADR-002 / ADR-006.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Astro v6 requires Node >= 22.12.0 (see ADR-006). Pin the major so Netlify
+  # builds match local. Bump deliberately, not implicitly.
+  NODE_VERSION = "24"

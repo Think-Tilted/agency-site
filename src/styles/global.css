@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/*
+  Class-based dark mode. Tailwind v4 configures variants in CSS.
+  `dark:` utilities apply when a `.dark` class is present on an ancestor
+  (we put it on <html>). A toggle in the header flips it.
+*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  Agency brand theme (Tailwind v4 — configured in CSS via @theme).
+  These tokens generate utilities like bg-ink, text-clay, font-display, etc.
+*/
+@theme {
+  /* Core neutrals — warm, editorial */
+  --color-ink: #1c1a17; /* near-black, warm */
+  --color-ink-soft: #36322c; /* secondary text on paper */
+  --color-paper: #f6f3ee; /* warm off-white */
+  --color-paper-dim: #e9e3d9; /* subtle surfaces/borders on paper */
+
+  /* Accent — confident clay/terracotta */
+  --color-clay: #bf5a36;
+  --color-clay-soft: #d98c6f;
+
+  /* Supporting — muted sage for quiet contrast */
+  --color-sage: #6f7d6a;
+
+  /* Typography */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+  Dark theme: override the semantic token *values* on `.dark`. Because every
+  utility resolves to var(--color-*), the whole palette flips from one place —
+  no need to sprinkle dark: variants across every element.
+*/
+.dark {
+  --color-ink: #f2ede4; /* text becomes light */
+  --color-ink-soft: #c4bdb1;
+  --color-paper: #17150f; /* background becomes dark */
+  --color-paper-dim: #2a261f;
+  --color-clay: #d97a52; /* slightly brighter accent for dark bg */
+  --color-clay-soft: #e3a589;
+}
+
+/* Base defaults applied to the document */
+html {
+  font-family: var(--font-body);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/*
+  DRY component classes via @apply — single source of truth for repeated
+  patterns (CTA buttons, form fields) instead of duplicating long class strings.
+*/
+@layer components {
+  .btn-primary {
+    @apply inline-block rounded-lg bg-clay px-6 py-3 font-medium text-paper transition-colors hover:bg-ink;
+  }
+
+  .field {
+    @apply rounded-md border border-paper-dim bg-paper-dim/40 px-3 py-2.5 text-base text-ink outline-none focus:border-clay focus:ring-2 focus:ring-clay/30;
+  }
+}
