@@ -58,6 +58,21 @@ supabase db push # apply migrations to the linked Supabase project
 
 ## Deploy
 
-Auto-deploys to Netlify on push to `main`. Pull requests get deploy previews.
-Build settings live in `netlify.toml`. Node version is pinned there to match
-local (Astro v6 requires Node >= 22.12.0).
+Deploys are **release-triggered, not push-triggered** — to conserve Netlify build
+minutes, pushing to `main` does **not** build the site. A production deploy happens
+only when a GitHub Release is published, which runs
+`.github/workflows/deploy-on-release.yml` and pings the Netlify build hook
+(stored in the `NETLIFY_BUILD_HOOK_URL` repo secret).
+
+```bash
+# Ship a new production deploy:
+gh release create v1.0.1 --generate-notes
+
+# Or trigger manually without a release (Actions tab → "Deploy on release" → Run),
+# or from the CLI:
+gh workflow run "Deploy on release" --repo Think-Tilted/agency-site
+```
+
+Push freely to `main` for work-in-progress; nothing builds until you cut a release.
+Build settings live in `netlify.toml`. Node version is pinned there to match local
+(Astro v6 requires Node >= 22.12.0).

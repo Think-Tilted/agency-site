@@ -1,0 +1,24 @@
+name: Deploy on release
+
+# Production deploys are deliberate, not automatic. Pushing to `main` does NOT
+# trigger a Netlify build (the push webhook was removed to conserve build minutes).
+# A deploy only happens when a GitHub Release is published, which calls the
+# Netlify build hook stored in the NETLIFY_BUILD_HOOK_URL secret.
+#
+# To ship:  gh release create v1.0.1 --generate-notes
+# Manual:   run this workflow from the Actions tab (workflow_dispatch).
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  trigger-netlify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Netlify build hook
+        run: |
+          curl --fail --silent --show-error -X POST \
+            "${{ secrets.NETLIFY_BUILD_HOOK_URL }}"
+          echo "Netlify build triggered for release ${{ github.event.release.tag_name || 'manual dispatch' }}"
