@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { buildTitle } from "../utils/seo";
+import { createSupabaseServerClient } from "../lib/supabase";
+
+// SSR: this page both renders the form and handles its POST. (ADR-011)
+export const prerender = false;
+
+const supabase = createSupabaseServerClient(Astro.request, Astro.cookies);
+
+// Already logged in? Skip the form.
+const {
+  data: { user },
+} = await supabase.auth.getUser();
+if (user) return Astro.redirect("/admin/events");
+
+let error: string | null = null;
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const email = String(form.get("email") ?? "");
+  const password = String(form.get("password") ?? "");
+
+  const { error: signInError } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (signInError) {
+    error = signInError.message;
+  } else {
+    // signInWithPassword set the session cookies via the server client.
+    return Astro.redirect("/admin/events");
+  }
+}
+---
+
+<BaseLayout title={buildTitle("Admin login")} description="Sign in to manage events.">
+  <section class="mx-auto max-w-sm py-12">
+    <h1 class="font-display text-3xl font-semibold tracking-tight text-ink">
+      Admin login
+    </h1>
+    <p class="mt-2 text-sm text-ink-soft">
+      Sign in to add or remove events.
+    </p>
+
+    {
+      error && (
+        <p class="mt-4 rounded-md border border-clay/40 bg-clay/5 px-3 py-2 text-sm text-clay">
+          {error}
+        </p>
+      )
+    }
+
+    <form method="POST" class="mt-6 space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-ink">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          class="mt-1 w-full rounded-md border border-paper-dim bg-paper px-3 py-2 text-ink outline-none focus:border-clay"
+        />
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-ink">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          required
+          autocomplete="current-password"
+          class="mt-1 w-full rounded-md border border-paper-dim bg-paper px-3 py-2 text-ink outline-none focus:border-clay"
+        />
+      </div>
+      <button
+        type="submit"
+        class="w-full rounded-md bg-clay px-4 py-2 font-medium text-paper transition-opacity hover:opacity-90"
+      >
+        Sign in
+      </button>
+    </form>
+  </section>
+</BaseLayout>

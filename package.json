@@ -15,12 +15,16 @@
     "check": "astro check"
   },
   "dependencies": {
+    "@astrojs/netlify": "^7.0.11",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.106.2",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.4.2",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "netlify-cli": "^26.0.2",
     "typescript": "^5.5.0"
   }
 }
