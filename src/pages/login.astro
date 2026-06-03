@@ -27,7 +27,9 @@ if (Astro.request.method === "POST") {
   });
 
   if (signInError) {
-    error = signInError.message;
+    // Generic message to avoid account enumeration (don't reveal whether the
+    // email exists or only the password was wrong).
+    error = "Invalid email or password.";
   } else {
     // signInWithPassword set the session cookies via the server client.
     return Astro.redirect("/admin/events");

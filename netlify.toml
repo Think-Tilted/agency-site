@@ -13,8 +13,7 @@
 # Note: no [[redirects]] needed. Astro emits dist/404.html, which Netlify serves
 # automatically for unmatched paths — a catch-all redirect would be redundant.
 
-# Baseline security headers applied to every response. Sensible, framework-
-# agnostic defaults; tighten (e.g. add a Content-Security-Policy) per project.
+# Baseline security headers applied to every response.
 [[headers]]
   for = "/*"
   [headers.values]
@@ -22,4 +21,6 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), camera=(), microphone=()"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://*.supabase.co; frame-ancestors 'none'"
 
